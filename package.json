@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "node tests/serverTests.js | tap-spec",
-    "server": "nodemone src/app.js"
+    "server": "nodemon src/app.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/lotus-1/ArtCourses-NAN#readme",
   "devDependencies": {
+    "nodemon": "^1.19.1",
     "supertest": "^4.0.2",
     "tap-spec": "^5.0.0",
     "tape": "^4.10.2"
