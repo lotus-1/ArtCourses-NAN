@@ -11,6 +11,7 @@ steps :
  - we will deploy our app to Heroku.
  - we will build our database using `postgres.sql`.
  - the user must sign up to be able to log in, which then we will add him to our users table in the database, that this table has { user_id, user_name, user_email, user_password } columns.
+ ![img](/home/nareman/Lotus/week-8/ArtCourses-NAN/assets/schema.jpeg)
  - we will use `bcrypt` to save a hashed password in the databse.
  - we will we use cookies to track the user's behavior in the  website.
  - then the user will log in to see the details about each course {name, brief explanation about the course, time (date and hours), price, number of participators that already sign for this course (in it we will show number of participators for that course yet so the user can see if he can take part of that same course: like this [number of participators : 4 from 10])} and decide in which course he would like to participate , by clicking the `participate` button, which then he will be added to `participators` table that includes { par_id, par_name, par_email, course_name } columns.
