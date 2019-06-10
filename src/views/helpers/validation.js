@@ -1,8 +1,8 @@
 const Joi = require('joi');
 
 const loginValidation = {
-    username: Joi.string().required(),
-    password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/).required(),
+email: Joi.string().email().required(),
+password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/).required(),
 };
 
 const signupValidation = {
@@ -11,7 +11,6 @@ const signupValidation = {
   password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/).required(),
   conPass: Joi.string().required().valid(Joi.ref('password')),
 };
-
 
 module.exports = {
   loginValidation,
