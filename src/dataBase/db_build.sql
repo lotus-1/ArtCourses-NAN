@@ -21,4 +21,7 @@ CREATE TABLE participators (
   course_id INTEGER REFERENCES courses(course_id)
 );
 
+INSERT INTO users (user_name, user_email, password) VALUES
+('example', 'example@example.com', 'example123');
+
 COMMIT;
