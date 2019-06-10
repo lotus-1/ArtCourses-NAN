@@ -7,7 +7,7 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-
+app.disable('x-powered-by');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.engine(
@@ -15,12 +15,11 @@ app.engine(
   exphbs({
     extname: 'hbs',
     layoutsDir: path.join(__dirname, 'views', 'layouts'),
-    // partialsDir: path.join(__dirname, 'views', 'partials'),
+    partialsDir: path.join(__dirname, 'views', 'partials'),
     defaultLayout: 'main',
-    // helpers: helpers,
+    helpers: path.join(__dirname, 'views', 'helpers'),
   })
 );
-
 
 app.set('port', process.env.PORT || 5000);
 app.use(routes);
