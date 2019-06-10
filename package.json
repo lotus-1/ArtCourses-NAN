@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "team mates :      * @AhlamKadour     * @NaremanFero     * @Noorb7188",
   "main": "index.js",
-  "directories": {
-    "test": "tests"
-  },
+
   "scripts": {
+    "testDb": "NODE_ENV=test node tests/db_tests.js",
     "test": "node tests/serverTests.js | tap-spec",
     "server": "nodemon src/server.js"
   },
