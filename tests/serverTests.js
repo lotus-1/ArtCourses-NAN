@@ -11,9 +11,10 @@ test('testing home page', (t) => {
   request(app)
     .get('/')
     .expect(200)
-    .expect('Content-Type', /json/)
+    .expect('Content-Type', 'text/html')
     .end((err, res) => {
       t.error(err)
       t.equal(res.statusCode, 200, 'The app should return a statusCode of 200 on / riute');
     })
+    t.end();
 })

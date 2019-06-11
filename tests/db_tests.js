@@ -19,7 +19,7 @@ test('Testing getData function', t => {
       }
     ];
 
-    getData((err, result) => {
+    getUser((err, result) => {
       if (err) console.log(err);
       t.deepEqual(result, expected, 'Returns expected data');
       t.end();
