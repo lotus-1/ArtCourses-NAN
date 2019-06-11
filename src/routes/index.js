@@ -5,6 +5,7 @@ const { loginValidation, signupValidation } = require('../helpers/validation');
 const { celebrate } = require('celebrate');
 const path = require('path');
 const hashingPassword = require('../helpers/hashPassword');
+const { showCourses } = require('../dataBase/queries/showData');
 const router = express.Router();
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
@@ -22,22 +23,21 @@ router.get('/signup', (req, res) => {
   res.render('signUp');
 });
 
+router.get('/showdata', (req, res) => {
+  res.json(showCourses());
+})
+
 router.post('/signup', validate(signupValidation), (req, res) => {
-console.log('my req body ', req.body);
-console.log('my password', req.body.password);
-const myHashPassword = hashingPassword(req.body.password);
-console.log(myHashPassword);
-res.send('<h1>Registration completed successfully</h1><button><a href="./courses">OK</a></button>')
+  console.log('my req body ', req.body);
+  console.log('my password', req.body.password);
+  const myHashPassword = hashingPassword(req.body.password);
+  console.log(myHashPassword);
+  res.send('<h1>Registration completed successfully</h1><button><a href="./courses">OK</a></button>')
 });
 
-// router.post('/signup', hashPassword(hashingPassword), (req, res) => {
-//   console.log('request body', req.body);
-//   console.log('hashingPassword', hashingPassword);
-// })
-
 router.post('/login', validate(loginValidation), (req, res) => {
-console.log('my req body ', req.body);
-res.render('courses');
+  console.log('my req body ', req.body);
+  res.render('courses');
 });
 
 router.post('/',(req,res)=>{

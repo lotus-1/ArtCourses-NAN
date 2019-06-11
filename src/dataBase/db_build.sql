@@ -17,7 +17,9 @@ CREATE TABLE courses (
   timewhen VARCHAR(100) NOT NULL,
   place VARCHAR(100) NOT NULL,
   age VARCHAR(50) NOT NULL,
-  cost VARCHAR(50) NOT NULL
+  cost VARCHAR(50) NOT NULL,
+  img_url VARCHAR(250) NOT NULL,
+  alt_name VARCHAR (100) NOT NULL
 );
 
 CREATE TABLE participators (
@@ -28,13 +30,13 @@ CREATE TABLE participators (
 INSERT INTO users (user_name, user_email, password) VALUES
 ('example', 'example@example.com', 'example123');
 
-INSERT INTO courses (course_name, timewhen, place, age, cost) VALUES
-('Arabic Calligraphy', '1 July 2019, On Monday At 17:00-20:00', 'Lotus Space - Isfiya', '20-30 years old', '450 NIS');
-INSERT INTO courses (course_name, timewhen, place, age, cost) VALUES
-('Mozaik Art', '2 July 2019, On Tuesday At 17:00-20:00', 'Lotus Space - Isfiya', '15-25 years old', '500 NIS');
-INSERT INTO courses (course_name, timewhen, place, age, cost) VALUES
-('Charcoal Art', '3 July 2019, On Wednesday At 17:00-20:00', 'Lotus Space - Isfiya', '15-30 years old', '400 NIS');
-INSERT INTO courses (course_name, timewhen, place, age, cost) VALUES
-('Mandala Art', '4 July 2019, On Thursday At 17:00-20:00', 'Lotus Space - Isfiya', '20-30 years old', '300 NIS');
+
+
+INSERT INTO courses (course_name, timewhen, place, age, cost, img_url, alt_name)
+VALUES
+  ('Arabic Calligraphy', '1 July 2019, On Monday At 17:00-20:00', 'Lotus Space - Isfiya', '20-30 years old', '450 NIS', '/assets/arabic.png', 'arabic_calligraphy'),
+  ('Mozaik Art', '2 July 2019, On Tuesday At 17:00-20:00', 'Lotus Space - Isfiya', '15-25 years old', '500 NIS', '/assets/mosaic.jpg', 'mozaic_art'),
+  ('Charcoal Art', '3 July 2019, On Wednesday At 17:00-20:00', 'Lotus Space - Isfiya', '15-30 years old', '400 NIS', '/assets/charcoal.jpg', 'Charcoal_drawing'),
+  ('Mandala Art', '4 July 2019, On Thursday At 17:00-20:00', 'Lotus Space - Isfiya', '20-30 years old', '300 NIS', '/assets/mandala.jpg', 'mandala_art');
 
 COMMIT;

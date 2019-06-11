@@ -3,7 +3,8 @@ const dbConnection = require('../db_connection.js');
 const showCourses = (cb) => {
   dbConnection.query('SELECT * FROM courses', (err, res) => {
     if (err) return cb(err);
-    cb(null, JSON.stringify(res.rows));
+    console.log(res.rows);
+    cb(null, res);
   });
 };
 
