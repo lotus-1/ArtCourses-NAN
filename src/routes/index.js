@@ -30,13 +30,16 @@ router.get('/showdata', (req, res) => {
 
 router.post('/signup', validate(signupValidation), (req, res) => {
 console.log('my req body ', req.body);
-const myHashPassword = hashingPassword(req.body.password);
-console.log('my hashed password : ', myHashPassword);
+hashingPassword(req.body.password, (error, result) => {
+  if(error) return error;
+  console.log('this my result', result);
 // set cookie
-res.cookie('testCookie', `${myHashPassword}`, {maxAge: 900000, httpOnly: true});
-console.log("Cookies after regesteration: ", req.cookies);
+res.cookie('userCookie', `${result}`, {httpOnly: true});
+console.log("Cookies after regesteration: ", req.headers.cookie);
 res.send('<h1>Registration completed successfully</h1><button><a href="./courses">OK</a></button>')
 });
+});
+
 
 router.post('/login', validate(loginValidation), (req, res) => {
 console.log('my req body in login :', req.body);
