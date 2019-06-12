@@ -29,8 +29,6 @@ router.get('/showdata', (req, res) => {
 })
 
 router.post('/signup', validate(signupValidation), (req, res) => {
-<<<<<<< HEAD
-<<<<<<< HEAD
 console.log('my req body ', req.body);
 const myHashPassword = hashingPassword(req.body.password);
 console.log('my hashed password : ', myHashPassword);
@@ -43,7 +41,6 @@ res.send('<h1>Registration completed successfully</h1><button><a href="./courses
 router.post('/login', validate(loginValidation), (req, res) => {
 console.log('my req body in login :', req.body);
 res.render('courses');
-=======
   console.log('my req body ', req.body);
   console.log('my password', req.body.password);
   const myHashPassword = hashingPassword(req.body.password);
@@ -54,8 +51,6 @@ res.render('courses');
 router.post('/login', validate(loginValidation), (req, res) => {
   console.log('my req body ', req.body);
   res.render('courses');
->>>>>>> ac29f847026be22ce0a32a9599dd67c9576279e5
-=======
   console.log('my req body ', req.body);
   console.log('my password', req.body.password);
   const myHashPassword = hashingPassword(req.body.password);
@@ -66,7 +61,6 @@ router.post('/login', validate(loginValidation), (req, res) => {
 router.post('/login', validate(loginValidation), (req, res) => {
   console.log('my req body ', req.body);
   res.render('courses');
->>>>>>> ac29f847026be22ce0a32a9599dd67c9576279e5
 });
 
 router.post('/',(req,res)=>{
