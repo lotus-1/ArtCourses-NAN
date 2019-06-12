@@ -36,6 +36,8 @@ router.post('/signup', validate(signupValidation), (req, res) => {
   });
  });
 });
+});
+
 
 router.get('/courses', (req, res) => {
   res.render('courses', {
