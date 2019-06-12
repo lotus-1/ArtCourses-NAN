@@ -6,8 +6,8 @@ const { celebrate } = require('celebrate');
 const path = require('path');
 const hashingPassword = require('../helpers/hashPassword');
 const cookieParser = require('cookie-parser');
-
-const { showCourses } = require('../dataBase/queries/showData');
+const { addUser, addParticipator } = require('../dataBase/queries/addData');
+const resultArr = require('../helpers/showCourses');
 const router = express.Router();
 router.use(cookieParser());
 
@@ -16,7 +16,6 @@ router.use(bodyParser.urlencoded({ extended: false }));
 
 
 router.get('/', (req, res) => {
-  console.log("Cookies : ", req.cookies);
   res.render('home');
 });
 
@@ -24,48 +23,43 @@ router.get('/signup', (req, res) => {
   res.render('signUp');
 });
 
-router.get('/showdata', (req, res) => {
-  res.json(showCourses());
-})
-
 router.post('/signup', validate(signupValidation), (req, res) => {
-console.log('my req body ', req.body);
-const myHashPassword = hashingPassword(req.body.password);
-console.log('my hashed password : ', myHashPassword);
+  hashingPassword(req.body.password, (error, result) => {
+  if(error) return error;
+  addUser(req.body.username, result, req.body.email, (err, result1)=> {
+    if (err) return err;
+    console.log('I added the user to db');
 // set cookie
-res.cookie('testCookie', `${myHashPassword}`, {maxAge: 900000, httpOnly: true});
-console.log("Cookies after regesteration: ", req.cookies);
-res.send('<h1>Registration completed successfully</h1><button><a href="./courses">OK</a></button>')
+  // res.cookie('userCookies ', `${result}`, {httpOnly: true});
+  // console.log("Cookies after regesteration: ", req.headers.cookie);
+  res.send('<h1>Registration completed successfully</h1><button><a href="./courses">OK</a></button>');
+  });
+ });
 });
 
-router.post('/login', validate(loginValidation), (req, res) => {
-console.log('my req body in login :', req.body);
-res.render('courses');
-  console.log('my req body ', req.body);
-  console.log('my password', req.body.password);
-  const myHashPassword = hashingPassword(req.body.password);
-  console.log(myHashPassword);
-  res.send('<h1>Registration completed successfully</h1><button><a href="./courses">OK</a></button>')
+router.get('/courses', (req, res) => {
+  res.render('courses', {
+    courses : resultArr,
+  });
 });
 
-router.post('/login', validate(loginValidation), (req, res) => {
+router.post('/', validate(loginValidation), (req, res) => {
   console.log('my req body ', req.body);
-  res.render('courses');
-  console.log('my req body ', req.body);
-  console.log('my password', req.body.password);
-  const myHashPassword = hashingPassword(req.body.password);
-  console.log(myHashPassword);
-  res.send('<h1>Registration completed successfully</h1><button><a href="./courses">OK</a></button>')
+  // res.json({succes: "login validation is confirmed"})
+  // jwt to set a cookie with the value !
+  // res.cookie('userCookie', )
+  res.redirect('/courses');
 });
 
-router.post('/login', validate(loginValidation), (req, res) => {
-  console.log('my req body ', req.body);
-  res.render('courses');
-});
 
-router.post('/',(req,res)=>{
-  res.json({succes: "login validation is confirmed"})
-});
+// a middle ware to check validation to authorised endpoints !
+// router.use((req, res, next)=> {
+//   if (!req.headers.cookie) {
+//     res.redirect('/signup');
+//   } else {
+//     res.redirect('/courses');
+//   }
+// })
 
 router.get('*', (req, res) => {
   res.sendFile('pageNotFound.html', { root: path.join(__dirname, '..', '..', 'public') });

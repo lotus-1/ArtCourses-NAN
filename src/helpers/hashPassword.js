@@ -1,14 +1,13 @@
 const bcrypt = require('bcrypt');
 
-const hashingPassword = (password) => {
-  return bcrypt.hash(password, 10, (error, hash) => {
-    if(error){
-      console.log('Error');
+const hashingPassword = (password, cb) => {
+   bcrypt.hash(password, 10, (error, hash) => {
+    if (error) {
+      cb(error);
     } else {
-      console.log('hash password:', hash);
-      return (null, hash);
-    }
-  })
+     cb(null, hash);
+  }
+});
 };
 
 module.exports = hashingPassword;
