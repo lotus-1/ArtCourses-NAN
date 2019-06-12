@@ -1,8 +1,9 @@
 const { showCourses } = require('../dataBase/queries/showData');
 
-// const showCoursesData = () => {
-//   console.log('in my helper');
-//   showCourses();
-// }
+const resultArr = [];
+ showCourses((err, res)=> {
+  if (err) return err;
+  res.forEach(val=> resultArr.push(val));
+});
 
-module.exports = showCourses;
+module.exports = resultArr;

@@ -37,6 +37,6 @@ VALUES
   ('Arabic Calligraphy', '1 July 2019, On Monday At 17:00-20:00', 'Lotus Space - Isfiya', '20-30 years old', '450 NIS', '/assets/arabic.png', 'arabic_calligraphy'),
   ('Mozaik Art', '2 July 2019, On Tuesday At 17:00-20:00', 'Lotus Space - Isfiya', '15-25 years old', '500 NIS', '/assets/mosaic.jpg', 'mozaic_art'),
   ('Charcoal Art', '3 July 2019, On Wednesday At 17:00-20:00', 'Lotus Space - Isfiya', '15-30 years old', '400 NIS', '/assets/charcoal.jpg', 'Charcoal_drawing'),
-  ('Mandala Art', '4 July 2019, On Thursday At 17:00-20:00', 'Lotus Space - Isfiya', '20-30 years old', '300 NIS', '/assets/mandala.jpg', 'mandala_art');
+  ('Mandala Art', '4 July 2019, On Thursday At 17:00-20:00', 'Lotus Space - Isfiya', '20-30 years old', '300 NIS', '/assets/mandala.jpeg', 'mandala_art');
 
 COMMIT;

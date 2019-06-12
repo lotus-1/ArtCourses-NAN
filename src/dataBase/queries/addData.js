@@ -1,6 +1,7 @@
 const dbConnection = require('../db_connection.js');
 
 const addUser = (username, password, email, cb) => {
+  console.log('am in my add user query');
   dbConnection.query('INSERT INTO users (user_name, password, user_email) VALUES ($1, $2, $3)', [username, password, email], (err, res) => {
     if (err) return cb(err);
     console.log('data been inserted to users table');
