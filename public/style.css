@@ -11,10 +11,17 @@ h1 {
 }
 h3 {
   color: #196666;
-
+  font-size: 50px;
+  text-align: center;
 }
 h4 {
   color: #ff751a;
+}
+h5 {
+  font-size: 45px;
+}
+p {
+  font-size: 35px;
 }
 footer{
   text-align: center;
@@ -30,12 +37,20 @@ img {
 div {
   float: left;
   width: 23%;
-  padding: 5px;
+  padding: 15px;
 }
 input {
   width: 380px;
   height: 50px;
   font-size: 30px;
+}
+button {
+  width: 150px;
+  height: 50px;
+  font-size: 20px;
+  border-radius: 100px;
+  border-color: orange;
+  font-weight: bold;
 }
 .form {
   width: 30%;
@@ -43,6 +58,7 @@ input {
 position: relative;
 margin-top: 1000px;
 text-align: center;
+margin: 0px;
 }
 .home{
   text-align: center;
