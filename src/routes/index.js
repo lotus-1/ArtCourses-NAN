@@ -7,7 +7,10 @@ const path = require('path');
 const hashingPassword = require('../helpers/hashPassword');
 const cookieParser = require('cookie-parser');
 const { addUser, addParticipator } = require('../dataBase/queries/addData');
-const resultArr = require('../helpers/showCourses');
+const { showPars, showPass } = require('../dataBase/queries/showData');
+const { resultArr, pars } = require('../helpers/showCourses');
+const { compare } = require('bcrypt');
+const { cutDomain, courseId } = require('../helpers/stringHelpers');
 const router = express.Router();
 router.use(cookieParser());
 
@@ -24,15 +27,12 @@ router.get('/signup', (req, res) => {
 });
 
 router.post('/signup', validate(signupValidation), (req, res) => {
-  hashingPassword(req.body.password, (error, result) => {
-  if(error) return error;
-  addUser(req.body.username, result, req.body.email, (err, result1)=> {
+    hashingPassword(req.body.password, (error, result) => {
+    if(error) return error;
+    addUser(req.body.username, result, req.body.email, (err, result1)=> {
     if (err) return err;
     console.log('I added the user to db');
-// set cookie
-  // res.cookie('userCookies ', `${result}`, {httpOnly: true});
-  // console.log("Cookies after regesteration: ", req.headers.cookie);
-  res.send('<h1>Registration completed successfully</h1><button><a href="./courses">OK</a></button>');
+    res.send('<h1>Registration completed successfully</h1><button><a href="/"> Log in </a></button>');
   });
  });
 });
@@ -40,17 +40,41 @@ router.post('/signup', validate(signupValidation), (req, res) => {
 router.get('/courses', (req, res) => {
   res.render('courses', {
     courses : resultArr,
+    pars : pars
   });
 });
 
+
+
 router.post('/', validate(loginValidation), (req, res) => {
-  console.log('my req body ', req.body);
-  // res.json({succes: "login validation is confirmed"})
-  // jwt to set a cookie with the value !
-  // res.cookie('userCookie', )
-  res.redirect('/courses');
+  showPass(req.body.email, (error, hashinData) => {
+    if (error)
+    res.send(error, 'Username or password is not correct ! ');
+    if (!hashinData) {
+      res.status(200).send(' <h2> No user found !</h2>' );
+    } else {
+    compare(req.body.password, hashinData, (err, hashMatch) => {
+      if (err) return err;
+      if (!hashMatch) {
+        res.status(200).send('<h2>Pass do not match !</h2>' );
+      }
+      console.log(req.body);
+      res.cookie(cutDomain(req.body.email), hashinData, { httpOnly: true });
+      res.redirect('/courses');
+    });
+  }
+});
 });
 
+router.post('/courses', (req, res) => {
+  let course=  courseId(Object.keys(req.body)[0]);
+  let domain = Object.keys(req.cookies)[0];
+  addParticipator(domain, course, (err, result) => {
+    if (err)  return err;
+    console.log('participator been added to data !');
+    res.redirect('/courses');
+  })
+});
 
 // a middle ware to check validation to authorised endpoints !
 // router.use((req, res, next)=> {

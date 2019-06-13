@@ -1,7 +1,6 @@
 const dbConnection = require('../db_connection.js');
 
 const addUser = (username, password, email, cb) => {
-  console.log('am in my add user query');
   dbConnection.query('INSERT INTO users (user_name, password, user_email) VALUES ($1, $2, $3)', [username, password, email], (err, res) => {
     if (err) return cb(err);
     console.log('data been inserted to users table');
@@ -9,12 +8,18 @@ const addUser = (username, password, email, cb) => {
   });
 };
 
-const addParticipator = (user_name, course_name, cb) => {
-  dbConnection.query(`INSERT INTO participators (user_id, course_id) VALUES (SELECT user_id FROM users WHERE user_name = ($1), SELECT course_id FROM Courses WHERE course_name = ($2))`, [user_name, course_name], (err, res) => {
+const addParticipator = (domain, course_id, cb) => {
+  console.log('am in my add par');
+  dbConnection.query(`INSERT INTO participators (user_id, course_id) SELECT user_id FROM users WHERE user_email LIKE %($1)%`, [domain], (err, res) => {
     if (err) return cb(err);
-    console.log('data been added to participators table');
+    console.log('participator been added to participators table');
     cb(null, true);
-  });
+  dbConnection.query(`INSERT INTO participators (course_id) VALUES ($2)`, [course_id], (err, res) => {
+    if (err) return cb(err);
+    console.log('course id been added to participators table');
+    cb(null, true);
+  })
+})
 };
 
 module.exports = {

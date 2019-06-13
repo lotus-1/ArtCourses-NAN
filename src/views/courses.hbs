@@ -11,7 +11,15 @@
   <p>{{this.age}}</p>
   <h5>HOW MUCH?</h5>
   <p>{{this.cost}}</p>
-  <button type="submit" name="join"> Join Course</button>
-  <button type="submit" name="cancel"> Cancel</button>
+  <h5>Participators till now</h5>
+  <p>{{ pars }}</p>
+  <form action="" method="POST">
+  <button type="submit" name="join {{this.course_id}}"> Join Course</button>
+</form>
+
+<form action="" method="POST">
+  <button type="submit" name="cancel {{this.course_id}}"> Cancel</button>
+</form>
+
 </div>
 {{/each}}

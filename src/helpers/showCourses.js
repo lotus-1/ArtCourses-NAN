@@ -1,4 +1,5 @@
-const { showCourses } = require('../dataBase/queries/showData');
+const { showCourses,
+        showPars } = require('../dataBase/queries/showData');
 
 const resultArr = [];
  showCourses((err, res)=> {
@@ -6,4 +7,10 @@ const resultArr = [];
   res.forEach(val=> resultArr.push(val));
 });
 
-module.exports = resultArr;
+// const pars = showPars(3, (err, res) => {
+//   if (err) return err;
+//   console.log('pars are ',res-1);
+// });
+
+
+module.exports = { resultArr };
