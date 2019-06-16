@@ -1,4 +1,3 @@
-<button type="submit" name="signout" action="./signout">Sign out !</button>
 {{#each courses}}
 <div>
   <h3>{{this.course_name}}</h3>
@@ -13,13 +12,16 @@
   <p>{{this.cost}}</p>
   <h5>Participators untill now</h5>
   <p>{{ pars }}</p>
-  <form action="" method="POST">
+  <form action="/join" method="POST">
   <button type="submit" name="join {{this.course_id}}"> Join Course</button>
 </form>
 
-<form action="" method="POST">
+<form action="/cancel" method="POST">
   <button type="submit" name="cancel {{this.course_id}}"> Cancel</button>
 </form>
 
 </div>
 {{/each}}
+<form action="/signout" method="post">
+<button type="submit" name="signout">Sign out !</button>
+</form>
