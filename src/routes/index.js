@@ -11,6 +11,7 @@ const { showPars, showPass } = require('../dataBase/queries/showData');
 const { resultArr, pars } = require('../helpers/showCourses');
 const { compare } = require('bcrypt');
 const { courseId } = require('../helpers/stringHelpers');
+const deleteUser = require('../dataBase/queries/deleteData');
 const router = express.Router();
 router.use(cookieParser());
 
@@ -44,8 +45,6 @@ router.get('/courses', (req, res) => {
   });
 });
 
-
-
 router.post('/', validate(loginValidation), (req, res) => {
   showPass(req.body.email, (error, hashinData) => {
     if (error)
@@ -66,33 +65,41 @@ router.post('/', validate(loginValidation), (req, res) => {
 });
 });
 
-router.post('/courses', (req, res) => {
-  console.log(req.cookies);
+router.post('/join', (req, res) => {
+  console.log('my cookies', req.cookies);
   let course_id =  courseId(Object.keys(req.body)[0]);
   console.log('my course_id : ', course_id);
   let userEmail = Object.keys(req.cookies)[0];
   console.log('my email user ', userEmail);
   addParticipator(userEmail, course_id, (err, result) => {
-    if (err)  return err;
-    console.log('participator been added to data !');
-    res.redirect('/courses');
-  })
+    if (err)  console.log(err);
+    else {
+      console.log('participator been added to data !');
+      res.send('<h1>You successfully joined the course</h1><button><a href="/courses">Back To Courses</a></button>');
+    }
+  });
 });
 
-// a middle ware to check validation to authorised endpoints !
-// router.use((req, res, next)=> {
-//   if (!req.headers.cookie) {
-//     res.redirect('/signup');
-//   } else {
-//     res.redirect('/courses');
-//   }
-// })
+router.post('/cancel', (req, res) => {
+  console.log('my cookies', req.cookies);
+  let userEmail = Object.keys(req.cookies)[0];
+  console.log('my email user ', userEmail);
+ deleteUser(userEmail, (err, result) => {
+  if (err) console.log(err);
+  else {
+    console.log('participator been deleted from data !');
+    res.send('<h1>You successfully canceled the course</h1><button><a href="/courses">Back To Courses</a></button>');
+  }
+});
+});
 
-router.get('/signout', (req, res) => {
+router.post('/signout', (req, res) => {
   let cookies = req.cookies;
-  res.clearCookie(cookies[0]);
+  console.log('my cookies in signout', cookies);
+  res.clearCookie(`${cookies}`, { maxAge:0, httpOnly: true});
+  console.log('my cookies in signout', cookies);
   res.redirect('/');
-})
+});
 
 router.get('*', (req, res) => {
   res.sendFile('pageNotFound.html', { root: path.join(__dirname, '..', '..', 'public') });
