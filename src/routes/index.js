@@ -67,6 +67,7 @@ router.post('/', validate(loginValidation), (req, res) => {
 });
 
 router.post('/courses', (req, res) => {
+  console.log(req.cookies);
   let course_id =  courseId(Object.keys(req.body)[0]);
   console.log('my course_id : ', course_id);
   let userEmail = Object.keys(req.cookies)[0];
@@ -86,6 +87,12 @@ router.post('/courses', (req, res) => {
 //     res.redirect('/courses');
 //   }
 // })
+
+router.get('/signout', (req, res) => {
+  let cookies = req.cookies;
+  res.clearCookie(cookies[0]);
+  res.redirect('/');
+})
 
 router.get('*', (req, res) => {
   res.sendFile('pageNotFound.html', { root: path.join(__dirname, '..', '..', 'public') });
