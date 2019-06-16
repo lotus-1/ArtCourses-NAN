@@ -10,7 +10,7 @@ const { addUser, addParticipator } = require('../dataBase/queries/addData');
 const { showPars, showPass } = require('../dataBase/queries/showData');
 const { resultArr, pars } = require('../helpers/showCourses');
 const { compare } = require('bcrypt');
-const { cutDomain, courseId } = require('../helpers/stringHelpers');
+const { courseId } = require('../helpers/stringHelpers');
 const router = express.Router();
 router.use(cookieParser());
 
@@ -59,7 +59,7 @@ router.post('/', validate(loginValidation), (req, res) => {
         res.status(200).send('<h2>Pass do not match !</h2>' );
       }
       console.log(req.body);
-      res.cookie(cutDomain(req.body.email), hashinData, { httpOnly: true });
+      res.cookie(req.body.email, hashinData, { httpOnly: true });
       res.redirect('/courses');
     });
   }
@@ -67,9 +67,11 @@ router.post('/', validate(loginValidation), (req, res) => {
 });
 
 router.post('/courses', (req, res) => {
-  let course=  courseId(Object.keys(req.body)[0]);
-  let domain = Object.keys(req.cookies)[0];
-  addParticipator(domain, course, (err, result) => {
+  let course_id =  courseId(Object.keys(req.body)[0]);
+  console.log('my course_id : ', course_id);
+  let userEmail = Object.keys(req.cookies)[0];
+  console.log('my email user ', userEmail);
+  addParticipator(userEmail, course_id, (err, result) => {
     if (err)  return err;
     console.log('participator been added to data !');
     res.redirect('/courses');
