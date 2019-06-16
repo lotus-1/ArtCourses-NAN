@@ -8,17 +8,15 @@ const addUser = (username, password, email, cb) => {
   });
 };
 
-const addParticipator = (domain, course_id, cb) => {
+const addParticipator = (user_email, course_id, cb) => {
   console.log('am in my add par');
-  dbConnection.query(`INSERT INTO participators (user_id, course_id) SELECT user_id FROM users WHERE user_email LIKE %($1)%`, [domain], (err, res) => {
+  dbConnection.query(`INSERT INTO participators (user_id, course_id)
+ VALUES ((SELECT user_id FROM users WHERE user_email = '($1)'), ($2));`,
+  [user_email, course_id], (err, res) => {
+    console.log('query is working');
     if (err) return cb(err);
     console.log('participator been added to participators table');
     cb(null, true);
-  dbConnection.query(`INSERT INTO participators (course_id) VALUES ($2)`, [course_id], (err, res) => {
-    if (err) return cb(err);
-    console.log('course id been added to participators table');
-    cb(null, true);
-  })
 })
 };
 
