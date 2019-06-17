@@ -32,10 +32,15 @@ router.post('/signup', validate(signupValidation), (req, res) => {
 });
 
 router.get('/courses', (req, res) => {
+  console.log('cookies ', req.cookies);
+  if (Object.keys(req.cookies).length === 0) {
+    res.render('cookieVal');
+  } else {
   res.render('courses', {
     courses : resultArr,
     pars : pars
   });
+}
 });
 
 router.post('/', validate(loginValidation), (req, res) => {
