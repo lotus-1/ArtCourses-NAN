@@ -33,7 +33,7 @@ router.post('/signup', validate(signupValidation), (req, res) => {
     addUser(req.body.username, result, req.body.email, (err, result1)=> {
     if (err) return err;
     console.log('I added the user to db');
-    res.send('<h1>Registration completed successfully</h1><button><a href="/"> Log in </a></button>');
+    res.render('registrationMsg');
   });
  });
 });
@@ -75,7 +75,7 @@ router.post('/join', (req, res) => {
     if (err)  console.log(err);
     else {
       console.log('participator been added to data !');
-      res.send('<h1>You successfully joined the course</h1><button><a href="/courses">Back To Courses</a></button>');
+      res.render('joinMsg');
     }
   });
 });
@@ -88,7 +88,7 @@ router.post('/cancel', (req, res) => {
   if (err) console.log(err);
   else {
     console.log('participator been deleted from data !');
-    res.send('<h1>You successfully canceled the course</h1><button><a href="/courses">Back To Courses</a></button>');
+    res.render('cancelMsg');
   }
 });
 });
