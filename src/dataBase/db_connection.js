@@ -7,7 +7,7 @@ let DATABASE_DB_URL;
 console.log('DB_URL is : ', DATABASE_DB_URL);
 
 if (!process.env.DATABASE_URL) {
-  DATABASE_DB_URL = process.env.DATABASE_URL;
+  DATABASE_DB_URL = process.env.DB_URL;
   console.log('NOT PROD', DATABASE_DB_URL);
 } else {
   DATABASE_DB_URL = process.env.DATABASE_URL;
