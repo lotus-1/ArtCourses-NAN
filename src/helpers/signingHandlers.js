@@ -1,5 +1,7 @@
 const { showPass } = require('../dataBase/queries/showData');
+const  hashingPassword = require('./hashPassword');
 const { compare } = require('bcrypt');
+const { addUser } = require('../dataBase/queries/addData');
 
 const signInHandler = (req, res) => {
   showPass(req.body.email, (error, hashinData) => {

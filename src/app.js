@@ -27,7 +27,7 @@ app.engine(
 
 app.set('trust proxy', 1);
 
-app.set('port', process.env.PORT || 3332);
+app.set('port', process.env.PORT || 5556);
 app.use(routes);
 
 module.exports = app;
