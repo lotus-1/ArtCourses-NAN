@@ -14,7 +14,7 @@ if (!process.env.DATABASE_URL) {
   console.log('production', DATABASE_DB_URL);
 }
 
-if (!DATABASE_DB_URL) throw new Error("Enviroment variable DB_URL must be set");
+if (!DATABASE_DB_URL) throw new Error("Enviroment variable DATABASE_DB_URL must be set");
 
 const params = url.parse(DATABASE_DB_URL);
 const [username, password] = params.auth.split(':');
