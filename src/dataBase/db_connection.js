@@ -3,14 +3,19 @@ const { Pool } = require('pg');
 const url = require('url');
 require('dotenv').config();
 
-let DB_URL = process.env.DB_URL;
+let DATABASE_DB_URL;
 
-if (process.env.NODE_ENV === "testDb") {
-  DB_URL = process.env.TEST_DB_URL;
+if (!process.env.DATABASE_URL) {
+  DATABASE_DB_URL = process.env.DB_URL;
+  console.log('NOT PROD', DATABASE_DB_URL);
+} else {
+  DATABASE_DB_URL = process.env.DATABASE_URL;
+  console.log('production', DATABASE_DB_URL);
 }
-if (!DB_URL) throw new Error("Enviroment variable DB_URL must be set");
 
-const params = url.parse(DB_URL);
+if (!DATABASE_DB_URL) throw new Error("Enviroment variable DB_URL must be set");
+
+const params = url.parse(DATABASE_DB_URL);
 const [username, password] = params.auth.split(':');
 
 const options = {
