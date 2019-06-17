@@ -2,12 +2,23 @@ body {
 background-image: url(assets/art.jpeg);
 background-repeat: no-repeat;
 background-size: cover;
+background-attachment: fixed;
 font-size: 60px;
 font-weight: bolder;
 }
 h1 {
   text-align: center;
-
+  text-shadow: 4px 4px black;
+  animation: blinker 5s linear infinite;
+}
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+      0% {color: #196666;}
+     25% {color: #00cccc;}
+     50% {color: #ff704d;}
+    100% {color: #ff751a;}
 }
 h2 {
   text-align: center;
@@ -20,7 +31,8 @@ h3 {
   text-align: center;
 }
 h4 {
-  color: #ff751a;
+  color: #862d59;
+  text-shadow: 2px 2px white;
 }
 h5 {
   font-size: 45px;
@@ -38,6 +50,12 @@ img {
   height: 350px;
   width: 350px;
   border-radius: 50px;
+  -webkit-transition: -webkit-transform 6s;
+  transition: transform 6s;
+}
+img:hover {
+ -webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
 }
 div {
   float: left;
