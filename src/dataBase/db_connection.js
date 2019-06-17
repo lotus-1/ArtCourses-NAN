@@ -4,14 +4,11 @@ const url = require('url');
 require('dotenv').config();
 
 let DATABASE_DB_URL;
-console.log('DB_URL is : ', DATABASE_DB_URL);
 
 if (!process.env.DATABASE_URL) {
   DATABASE_DB_URL = process.env.DB_URL;
-  console.log('NOT PROD', DATABASE_DB_URL);
 } else {
   DATABASE_DB_URL = process.env.DATABASE_URL;
-  console.log('production', DATABASE_DB_URL);
 }
 
 if (!DATABASE_DB_URL) throw new Error("Enviroment variable DATABASE_DB_URL must be set");

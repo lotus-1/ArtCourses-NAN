@@ -9,9 +9,9 @@ const cookieParser = require('cookie-parser');
 const { addUser, addParticipator } = require('../dataBase/queries/addData');
 const { showPars, showPass } = require('../dataBase/queries/showData');
 const { resultArr, pars } = require('../helpers/showCourses');
-const { compare } = require('bcrypt');
 const { courseId } = require('../helpers/stringHelpers');
 const deleteUser = require('../dataBase/queries/deleteData');
+const { signInHandler, signUpHandler } = require('../helpers/signingHandlers');
 const router = express.Router();
 router.use(cookieParser());
 
@@ -28,14 +28,7 @@ router.get('/signup', (req, res) => {
 });
 
 router.post('/signup', validate(signupValidation), (req, res) => {
-    hashingPassword(req.body.password, (error, result) => {
-    if(error) return error;
-    addUser(req.body.username, result, req.body.email, (err, result1)=> {
-    if (err) return err;
-    console.log('I added the user to db');
-    res.render('registrationMsg');
-  });
- });
+  signUpHandler(req, res);
 });
 
 router.get('/courses', (req, res) => {
@@ -46,31 +39,12 @@ router.get('/courses', (req, res) => {
 });
 
 router.post('/', validate(loginValidation), (req, res) => {
-  showPass(req.body.email, (error, hashinData) => {
-    if (error)
-    res.send(error, 'Username or password is not correct ! ');
-    if (!hashinData) {
-      res.status(200).send(' <h2> No user found !</h2>' );
-    } else {
-    compare(req.body.password, hashinData, (err, hashMatch) => {
-      if (err) return err;
-      if (!hashMatch) {
-        res.status(200).send('<h2>Pass do not match !</h2>' );
-      }
-      console.log(req.body);
-      res.cookie(req.body.email, hashinData, { httpOnly: true });
-      res.redirect('/courses');
-    });
-  }
-});
+signInHandler(req, res);
 });
 
 router.post('/join', (req, res) => {
-  console.log('my cookies', req.cookies);
   let course_id =  courseId(Object.keys(req.body)[0]);
-  console.log('my course_id : ', course_id);
   let userEmail = Object.keys(req.cookies)[0];
-  console.log('my email user ', userEmail);
   addParticipator(userEmail, course_id, (err, result) => {
     if (err)  console.log(err);
     else {
@@ -81,9 +55,7 @@ router.post('/join', (req, res) => {
 });
 
 router.post('/cancel', (req, res) => {
-  console.log('my cookies', req.cookies);
   let userEmail = Object.keys(req.cookies)[0];
-  console.log('my email user ', userEmail);
  deleteUser(userEmail, (err, result) => {
   if (err) console.log(err);
   else {
@@ -95,9 +67,8 @@ router.post('/cancel', (req, res) => {
 
 router.post('/signout', (req, res) => {
   let cookies = req.cookies;
-  console.log('my cookies in signout', cookies);
-  res.clearCookie(`${cookies}`, { maxAge:0, httpOnly: true});
-  console.log('my cookies in signout', cookies);
+  let cookieKey = Object.keys(cookies);
+  res.clearCookie(`${cookieKey[0]}`, { maxAge:0, httpOnly: true});
   res.redirect('/');
 });
 
