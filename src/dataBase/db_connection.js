@@ -4,6 +4,7 @@ const url = require('url');
 require('dotenv').config();
 
 let DB_URL = process.env.DB_URL;
+console.log('DB_URL is : ', DB_URL);
 
 if (process.env.NODE_ENV === "testDb") {
   DB_URL = process.env.TEST_DB_URL;
