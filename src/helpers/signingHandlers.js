@@ -13,7 +13,6 @@ const signInHandler = (req, res) => {
       if (!hashMatch) {
         res.status(200).send('<h2>Pass do not match !</h2>' );
       }
-      console.log(req.body);
       res.cookie(req.body.email, hashinData, { httpOnly: true });
       res.redirect('/courses');
     });
