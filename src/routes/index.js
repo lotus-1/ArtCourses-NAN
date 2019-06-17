@@ -73,7 +73,7 @@ router.post('/signout', (req, res) => {
 });
 
 router.get('*', (req, res) => {
-  res.sendFile('pageNotFound.html', { root: path.join(__dirname, '..', '..', 'public') });
+  res.render('pageNotFound');
 });
 
 module.exports = router;
