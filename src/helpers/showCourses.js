@@ -1,5 +1,4 @@
-const { showCourses,
-        showPars } = require('../dataBase/queries/showData');
+const { showCourses } = require('../dataBase/queries/showData');
 
 const resultArr = [];
  showCourses((err, res)=> {
