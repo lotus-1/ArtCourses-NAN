@@ -25,8 +25,6 @@ app.engine(
   })
 );
 
-app.set('trust proxy', 1);
-
 app.set('port', process.env.PORT || 5556);
 app.use(routes);
 
