@@ -25,7 +25,7 @@ app.engine(
   })
 );
 
-app.set('port', process.env.PORT || 5556);
+app.set('port', process.env.PORT || 3332);
 app.use(routes);
 
 module.exports = app;
